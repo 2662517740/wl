@@ -5,6 +5,7 @@ import com.entity.User;
 import com.entity.UserVO;
 import com.entity.response.AppResponse;
 import com.redis.RedisUtils;
+import com.service.IAdministratorsService;
 import com.service.IUserService;
 import com.utils.CreateMD5;
 import com.utils.UUIDUtil;

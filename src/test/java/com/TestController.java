@@ -1,9 +1,13 @@
 package com;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.entity.Administrators;
 import com.entity.User;
 import com.entity.UserVO;
 import com.redis.RedisUtils;
+import com.service.IAdministratorsService;
 import com.service.IUserService;
 import com.utils.CreateMD5;
 import com.utils.UUIDUtil;
@@ -26,6 +30,10 @@ public class TestController {
 
     @Resource
     private RedisUtils redisUtils;
+
+
+    @Resource
+    private IAdministratorsService administratorsService;
 
     @Autowired
     private IUserService userService;
@@ -91,5 +99,32 @@ public class TestController {
         user1.setModificationBy(user.getId());
         user1.setLastmodificationTime(df.format(new Date()));
         userService.updateById(user1);
+    }
+
+    /**
+     * 管理员登录
+     */
+    @Test
+    public void adminLogin() throws UnsupportedEncodingException {
+        HashMap<String , Object> map = new HashMap<>();
+        map.put("Account" , "admin");
+        map.put("PassWord" , CreateMD5.getMd5("123456"));
+        List<Administrators> list= (List<Administrators>) administratorsService.listByMap(map);
+        System.out.println(list);
+    }
+
+    /**
+     * 获取用户列表
+     */
+    @Test
+    public void getUserList(){
+//        User user = new User();
+        IPage<User> page = new Page<>();
+        page.setPages(0);
+        page.setCurrent(0L);
+        IPage<User> userIPage = userService.page(page);
+        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println(userIPage.getRecords().size());
+        System.out.println(userIPage.getRecords());
     }
 }
