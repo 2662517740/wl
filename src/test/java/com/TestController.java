@@ -3,12 +3,15 @@ package com;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.entity.Administrators;
 import com.entity.User;
 import com.entity.UserVO;
+import com.entity.Waybill;
 import com.redis.RedisUtils;
 import com.service.IAdministratorsService;
 import com.service.IUserService;
+import com.service.IWaybillService;
 import com.utils.CreateMD5;
 import com.utils.UUIDUtil;
 import org.junit.Test;
@@ -35,8 +38,12 @@ public class TestController {
     @Resource
     private IAdministratorsService administratorsService;
 
+
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IWaybillService waybillService;
 
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -126,5 +133,42 @@ public class TestController {
         System.out.println("---------------------------------------------------------------------------------------------");
         System.out.println(userIPage.getRecords().size());
         System.out.println(userIPage.getRecords());
+    }
+
+    /**
+     *新增单个运单
+     */
+    @Test
+    public void setWaybill(){
+        Waybill waybill = new Waybill();
+        waybill.setId(UUIDUtil.uuidStr());
+        waybill.setWaybillNo(UUIDUtil.uuidStr());
+        waybill.setSenderName("张三");
+        waybill.setSenderAddress("广东河源");
+        waybill.setSenderPhone("17865602343");
+        waybill.setRecipientName("李四");
+        waybill.setRecipientAddress("广东广州");
+        waybill.setRecipientPhone("17865602430");
+        waybill.setWeight(2.0);
+        waybill.setState("待揽收");
+        waybill.setTime(df.format(new Date()));
+        waybill.setCreateBy("194ec17ce87a4a29bac67e780bc4fc8e");
+        waybill.setCreateTime(df.format(new Date()));
+        waybill.setModificationBy("194ec17ce87a4a29bac67e780bc4fc8e");
+        waybill.setLastmodificationTime(df.format(new Date()));
+        waybill.setIsDelete(0);
+        waybill.setVersion(0);
+        waybillService.save(waybill);
+        System.out.println(waybillService.getById(waybill.getId()));
+    }
+
+
+
+    /**
+     * 修改运单
+     */
+    @Test
+    public void updateWaybill(){
+
     }
 }

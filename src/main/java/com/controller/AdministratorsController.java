@@ -12,7 +12,9 @@ import com.service.IAdministratorsService;
 import com.service.IUserService;
 import com.utils.CreateMD5;
 import com.utils.UUIDUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +38,10 @@ import java.util.List;
  * @since 2020-02-26
  */
 @RestController
-@RequestMapping("/administrators/administrators")
+@RequestMapping("/com/administrators")
+@Slf4j
+@Api("管理员管理")
+@Transactional(readOnly = false)
 public class AdministratorsController {
 
     @Resource

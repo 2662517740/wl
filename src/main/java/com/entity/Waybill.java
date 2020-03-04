@@ -45,7 +45,7 @@ public class Waybill extends BaseEntity {
      * 寄件人电话
      */
     @TableField("SenderPhone")
-    private Integer SenderPhone;
+    private String SenderPhone;
 
     /**
      * 收件人姓名
@@ -63,13 +63,13 @@ public class Waybill extends BaseEntity {
      * 收件人电话
      */
     @TableField("RecipientPhone")
-    private Integer RecipientPhone;
+    private String RecipientPhone;
 
     /**
      * 重量
      */
     @TableField("Weight")
-    private BigDecimal Weight;
+    private double Weight;
 
     /**
      * 备注
@@ -87,7 +87,7 @@ public class Waybill extends BaseEntity {
      * 时间
      */
     @TableField("Time")
-    private LocalDateTime Time;
+    private String Time;
 
     /**
      * 是否换单
