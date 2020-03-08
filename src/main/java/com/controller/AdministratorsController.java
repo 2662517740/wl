@@ -59,7 +59,7 @@ public class AdministratorsController {
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * @Description：用户登陆
+     * @Description：管理员登录
      * @Date:2020/03/02
      * @Param:UserVO
      */
@@ -83,7 +83,7 @@ public class AdministratorsController {
     }
 
     /**
-     * @Description：用户登陆
+     * @Description：获取用户列表
      * @Date:2020/03/02
      * @Param:UserVO
      */

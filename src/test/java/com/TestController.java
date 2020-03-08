@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import javax.swing.plaf.synth.SynthEditorPaneUI;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -143,14 +144,14 @@ public class TestController {
         Waybill waybill = new Waybill();
         waybill.setId(UUIDUtil.uuidStr());
         waybill.setWaybillNo(UUIDUtil.uuidStr());
-        waybill.setSenderName("张三");
+        waybill.setSenderName("王五");
         waybill.setSenderAddress("广东河源");
         waybill.setSenderPhone("17865602343");
-        waybill.setRecipientName("李四");
+        waybill.setRecipientName("周六");
         waybill.setRecipientAddress("广东广州");
         waybill.setRecipientPhone("17865602430");
-        waybill.setWeight(2.0);
-        waybill.setState("待揽收");
+        waybill.setWeight(1.0);
+        waybill.setState("运输中");
         waybill.setTime(df.format(new Date()));
         waybill.setCreateBy("194ec17ce87a4a29bac67e780bc4fc8e");
         waybill.setCreateTime(df.format(new Date()));
@@ -163,12 +164,42 @@ public class TestController {
     }
 
 
-
     /**
      * 修改运单
      */
     @Test
     public void updateWaybill(){
+        Waybill waybill = new Waybill();
+        waybill.setId("599a2e139e97428c93657ee0a8dc5e2d");
+        waybill.setSenderName("张三");
+        waybill.setVersion(2);
+        waybill.setModificationBy(waybill.getId());
+        waybill.setLastmodificationTime(df.format(new Date()));
+        boolean update = waybillService.updateById(waybill);
+        System.out.println(update);
+    }
 
+    /**
+     * 查询运单详情
+     */
+    @Test
+    public void getWaybill(){
+        Waybill waybill = new Waybill();
+        waybill.setId("599a2e139e97428c93657ee0a8dc5e2d");
+        Waybill  waybill1 = waybillService.getById(waybill);
+        System.out.println(waybill1);
+    }
+
+    /**
+     * 查询运单列表
+     */
+    @Test
+    public void getWaybillList(){
+//        Waybill waybill = new Waybill();
+        IPage<Waybill> page = new Page<>();
+        page.setPages(0);
+        page.setCurrent(0L);
+        IPage<Waybill> waybillIPage = waybillService.page(page);
+        System.out.println(waybillIPage.getRecords());
     }
 }
