@@ -1,6 +1,7 @@
 package com.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.entity.Waybill;
@@ -114,8 +115,13 @@ public class WaybillController {
         IPage<Waybill> page = new Page<>();
         page.setPages(0);
         page.setCurrent(0L);
-        IPage<Waybill> waybillIPage = waybillService.page(page);
+        IPage<Waybill> waybillIPage = waybillService.page(page,new QueryWrapper<Waybill>().orderByDesc("create_time"));
         return waybillIPage;
     }
 
+    /**
+     * @Description：新增多个运单
+     * @Date:2020/03/08
+     * @Param:Waybill
+     */
 }

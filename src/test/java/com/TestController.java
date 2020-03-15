@@ -1,15 +1,14 @@
 package com;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
-import com.entity.Administrators;
-import com.entity.User;
-import com.entity.UserVO;
-import com.entity.Waybill;
+import com.entity.*;
 import com.redis.RedisUtils;
 import com.service.IAdministratorsService;
+import com.service.ILogisticsService;
 import com.service.IUserService;
 import com.service.IWaybillService;
 import com.utils.CreateMD5;
@@ -45,6 +44,9 @@ public class TestController {
 
     @Autowired
     private IWaybillService waybillService;
+
+    @Autowired
+    private ILogisticsService logisticsService;
 
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -190,6 +192,12 @@ public class TestController {
         System.out.println(waybill1);
     }
 
+
+    /**
+     * 通过寄件人姓名查询运单
+     */
+
+
     /**
      * 查询运单列表
      */
@@ -199,7 +207,22 @@ public class TestController {
         IPage<Waybill> page = new Page<>();
         page.setPages(0);
         page.setCurrent(0L);
-        IPage<Waybill> waybillIPage = waybillService.page(page);
+        IPage<Waybill> waybillIPage = waybillService.page(page,new QueryWrapper<Waybill>().orderByDesc("create_time"));
         System.out.println(waybillIPage.getRecords());
     }
+
+    /**
+     * 通过运单号查询运单物流
+     */
+    @Test
+    public void getlogistics(){
+        Logistics logistics = new Logistics();
+        logistics.setWaybillNo("3a6a8f955e634628859414dc24a467d6");
+        IPage<Logistics> page = new Page<>();
+        page.setCurrent(0L);
+        page.setPages(0);
+        IPage<Logistics> logisticsIPage = logisticsService.page(page,new QueryWrapper<Logistics>().eq("WaybillNo",logistics.getWaybillNo()).orderByDesc("create_time"));
+        System.out.println(logisticsIPage.getRecords());
+    }
+
 }
